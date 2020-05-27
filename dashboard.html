@@ -1,0 +1,120 @@
+{%  extends 'don_hang/main.html' %}
+
+{% block content %}
+
+{%  include 'don_hang/status.html' %}
+{% load humanize %}
+
+<br>
+
+<div class="row">
+	<div class="col-md-5">
+		<h5>QUẢN LÝ KHÁCH HÀNG:</h5>
+		<hr>
+		<div class="card card-body">
+			<a class="btn btn-primary  btn-sm btn-block" href="">Thêm khách hàng</a>
+			<table class="table table-sm">
+				<tr>
+					<th></th>
+					<th>Khách hàng</th>
+					<th>Số điện thoại</th>
+					<th>Ngày tạo</th>
+				</tr>
+
+				{% for customer in customers %}
+					<tr>
+						<td><a class="btn btn-sm-sm btn-info" href="url 'customer' customer.id">views</a></td>
+						<td>{{ customer.name }}</td>
+						<td>{{ customer.phone }}</td>
+						<td>{{ customer.date_created | naturaltime }}</td>
+					</tr>
+				{% endfor %}
+
+
+			</table>
+		</div>
+	</div>
+
+	<div class="col-md-7">
+		<h5>QUẢN LÝ ĐƠN HÀNG</h5>
+		<hr>
+		<div class="card card-body">
+
+			{% if chiphi %}
+			  <table class="table table-bordered">
+					<tr style="font-size: 14px;">
+					  <td align="center"><b>Tên khách hàng</b></td>
+					  <td align="center"><b>Tên đơn hàng</b></td>
+					  <td align="center"><b>Số lượng</b></td>
+					  <td align="center"><b>Giá tiền</b></td>
+					  <td align="center"><b>Phụ phí</b></td>
+					  <td align="center"><b>Tổng thu</b></td>
+					  <td align="center"><b>Đã thu</b></td>
+					  <td align="center"><b>Phải thu</b></td>
+					  <td align="center"><b>Tên chi phí</b></td>
+					  <td align="center"><b>Phải chi</b></td>
+					  <td align="center"><b>Lợi nhuận sau chi</b></td>
+					  <td align="center"><b>Loại dịch vụ</b></td>
+					  <td align="center"><b>Tình trạng</b></td>
+<!--					  <td align="center"><b>Thanh toán</b></td>-->
+<!--					  <td align="center"><b>Ghi chú</b></td>-->
+					  <td align="center"><b>Ngày tạo</b></td>
+					  <td align="center"><b>Thanh toán</b></td>
+					  <td align="center"><b>Xóa</b></td>
+					</tr>
+				{% for phi in chiphi %}
+				  {% if phi.order.payment_status %}
+				  	<tr>
+				  		<td><a href = "url 'customer' order.id ">{{phi.order.customer.name}}</a></td>
+						<td><a href = "url 'order' order.id ">{{phi.order.order_name}}</a></td>
+						<td>{{ phi.order.quantity | intcomma }}</td>
+						<td>{{ phi.order.price | intcomma }}</td>
+						<td>{{ phi.order.fee | intcomma }}</td>
+						<td>{{ phi.order.sum | intcomma}}</td>
+						<td>{{ phi.order.deposit | intcomma}}</td>
+						<td>{{ phi.order.phaithu | intcomma}}</td>
+						<td>{{ phi.fee_name | intcomma }}</td>
+						<td>{{ phi.tongphi | intcomma }}</td>
+						<td>{{ phi.loinhuan | intcomma }}</td>
+						<td>{{ phi.order.category }}</td>
+						<td>{{ phi.order.status }}</td>
+<!--						<td class="table-success">{{ order.payment_status }}</td>-->
+<!--						<td>{{ order.note }}</td>-->
+						<td>{{ phi.order.date_created | naturaltime}}</td>
+						<td class="table-success"><center><a href = "url 'uncross' order.id "> Đã TT </a></center></td>
+						<td><center><a href = " url 'delete' order.id ">Xóa</a></center></td>
+					</tr>
+				  {% else %}
+					<tr>
+						<td><a href = "url 'customer' order.id ">{{phi.order.customer.name}}</a></td>
+						<td><a href = "url 'order' order.id ">{{phi.order.order_name}}</a></td>
+						<td>{{ phi.order.quantity | intcomma }}</td>
+						<td>{{ phi.order.price | intcomma }}</td>
+						<td>{{ phi.order.fee | intcomma }}</td>
+						<td>{{ phi.order.sum | intcomma}}</td>
+						<td>{{ phi.order.deposit | intcomma}}</td>
+						<td>{{ phi.order.phaithu | intcomma}}</td>
+						<td>{{ phi.fee_name | intcomma }}</td>
+						<td>{{ phi.tongphi | intcomma }}</td>
+						<td>{{ phi.loinhuan | intcomma }}</td>
+						<td>{{ phi.order.category }}</td>
+						<td>{{ phi.order.status }}</td>
+<!--						<td>{{ order.payment_status }}</td>-->
+<!--						<td>{{ order.note }}</td>-->
+						<td>{{phi.order.date_created | naturaltime }}</td>
+						<td><center><a href = "url 'uncross' order.id "> Chưa TT</a></center></td>
+						<td><center><a href = "url 'delete' order.id">Xóa</a></center></td>
+					</tr>
+				  {% endif %}
+				{% endfor %}
+			  </table>
+			{% endif %}
+
+
+		</div>
+	</div>
+
+</div>
+
+{% endblock %}
+
